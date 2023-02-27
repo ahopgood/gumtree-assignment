@@ -13,7 +13,7 @@
         <lombok.version>1.18.24</lombok.version>
         <assertj.version>3.21.0</assertj.version>
         <mockito.version>3.6.0</mockito.version>
-        <commons-csv.version>1.10.0</commons-csv.version>
+        <opencsv.version>5.7.1</opencsv.version>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <surefire.plugin.version>3.0.0-M9</surefire.plugin.version>
         <failsafe.plugin.version>3.0.0-M9</failsafe.plugin.version>
@@ -47,9 +47,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>${commons-csv.version}</version>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
         </dependency>
     </dependencies>
     <build>

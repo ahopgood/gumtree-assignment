@@ -8,37 +8,67 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class GenderTest {
 
     @Test
-    void testUnknownGender_throwsException() {
+    void testValueOf_givenUnknownGender_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("unknown"));
     }
 
     @Test
-    void testLowercaseGender_male() {
+    void testValueOf_givenLowercaseGender_male_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("male"));
     }
 
     @Test
-    void testMixedcaseGender_male() {
+    void testValueOf_givenMixedcaseGender_male_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("mAlE"));
     }
 
     @Test
-    void testUppercaseGender_male() {
+    void testValueOf_givenUppercaseGender_male() {
         assertThat(Gender.valueOf("MALE")).isEqualTo(Gender.MALE);
     }
 
     @Test
-    void testUppercaseGender_female() {
+    void testValueOf_givenUppercaseGender_female() {
         assertThat(Gender.valueOf("FEMALE")).isEqualTo(Gender.FEMALE);
     }
 
     @Test
-    void testLowercaseGender_female() {
+    void testValueOf_givenLowercaseGender_female_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("female"));
     }
 
     @Test
-    void testMixedcaseGender_female() {
+    void testValueOf_givenMixedcaseGender_female_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("fEmAlE"));
+    }
+
+    @Test
+    void testFromString_givenLowercaseGender_male() {
+        assertThat(Gender.fromString("male")).isEqualTo(Gender.MALE);
+    }
+
+    @Test
+    void testFromString_givenMixedcaseGender_male() {
+        assertThat(Gender.fromString("mAlE")).isEqualTo(Gender.MALE);
+    }
+
+    @Test
+    void testFromString_givenUppercaseGender_male() {
+        assertThat(Gender.fromString("MALE")).isEqualTo(Gender.MALE);
+    }
+
+    @Test
+    void testFromString_givenUppercaseGender_female() {
+        assertThat(Gender.fromString("FEMALE")).isEqualTo(Gender.FEMALE);
+    }
+
+    @Test
+    void testFromString_givenLowercaseGender_female() {
+        assertThat(Gender.fromString("female")).isEqualTo(Gender.FEMALE);
+    }
+
+    @Test
+    void testFromString_givenMixedcaseGender_female() {
+        assertThat(Gender.fromString("fEmAlE")).isEqualTo(Gender.FEMALE);
     }
 }

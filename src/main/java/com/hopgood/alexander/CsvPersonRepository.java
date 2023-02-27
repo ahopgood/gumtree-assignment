@@ -2,45 +2,35 @@ package com.hopgood.alexander;
 
 import com.hopgood.alexander.model.Gender;
 import com.hopgood.alexander.model.Person;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import java.util.List;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 public class CsvPersonRepository implements PersonRepository {
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
-    private final List<Person> persons = new LinkedList<>();
-    public CsvPersonRepository(Path csvSourceFilePath) throws IOException {
-        Reader in = new FileReader(csvSourceFilePath.toFile());
-        CSVFormat format = CSVFormat.DEFAULT.builder()
-                .setIgnoreSurroundingSpaces(true) //crucial to handle whitespace around csv entries
+    private final List<Person> persons;
+    public CsvPersonRepository(Path csvSourceFilePath) throws IOException, CsvException {
+        CSVReader reader = new CSVReaderBuilder(new FileReader(csvSourceFilePath.toFile()))
                 .build();
+        this.persons = reader.readAll().stream().map(this::map).toList();
+    }
 
-        Iterable<CSVRecord> records = CSVParser.parse(in ,format);
-        for (CSVRecord record : records) {
-            persons.add(Person.builder()
-                    .dateOfBirth(LocalDate.parse(record.get(2), dateFormatter))
-                    .gender(fromString(record.get(1)))
-                    .fullName(record.get(0))
-                    .build()
-            );
-        }
+    Person map(String[] record) {
+        return Person.builder()
+                .dateOfBirth(LocalDate.parse(record[2].trim(), dateFormatter))
+                .gender(Gender.fromString(record[1].trim()))
+                .fullName(record[0].trim())
+                .build();
     }
     @Override
     public List<Person> getAll() {
         return this.persons;
-    }
-
-    Gender fromString(String gender) {
-        return Gender.valueOf(gender.toUpperCase());
     }
 }
