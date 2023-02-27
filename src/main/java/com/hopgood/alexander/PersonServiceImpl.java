@@ -1,5 +1,6 @@
 package com.hopgood.alexander;
 
+import com.hopgood.alexander.model.Gender;
 import com.hopgood.alexander.model.Person;
 import lombok.Builder;
 
@@ -8,8 +9,11 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
     @Override
-    public Integer howManyMales() {
-        return null;
+    public Long howManyMales() {
+        return personRepository.getAll()
+                .stream()
+                .filter(person -> person.getGender() == Gender.MALE)
+                .count();
     }
 
     @Override

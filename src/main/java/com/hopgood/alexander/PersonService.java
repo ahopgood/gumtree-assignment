@@ -4,7 +4,7 @@ import com.hopgood.alexander.model.Person;
 
 public interface PersonService {
 
-    Integer howManyMales();
+    Long howManyMales();
 
     Person getOldest();
 
