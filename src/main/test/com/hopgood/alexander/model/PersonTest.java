@@ -1,8 +1,7 @@
 package com.hopgood.alexander.model;
 
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 
@@ -10,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PersonTest {
 
-    private final ZonedDateTime dob = ZonedDateTime.of(1980, 7, 26, 0, 0, 0, 0, ZoneId.of("UTC"));
+    private final LocalDate dob = LocalDate.of(1980, 7, 26);
     private final String fullName = "Jacinda Ardern";
     private final Gender gender = Gender.FEMALE;
 
