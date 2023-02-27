@@ -1,6 +1,5 @@
 package com.hopgood.alexander.model;
 
-
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
