@@ -2,6 +2,7 @@ package com.hopgood.alexander;
 
 import com.hopgood.alexander.model.Gender;
 import com.hopgood.alexander.model.Person;
+import java.util.Optional;
 import lombok.Builder;
 
 @Builder
@@ -17,8 +18,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person getOldest() {
-        return null;
+    public Optional<Person> getOldest() {
+        return personRepository.getAll()
+                .stream()
+                .sorted((person1, person2) -> person1.getDateOfBirth().compareTo(person2.getDateOfBirth()))
+                .findFirst();
     }
 
     @Override

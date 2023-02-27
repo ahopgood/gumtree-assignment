@@ -55,7 +55,8 @@ class PersonServiceImplTest {
                 youngest,
                 middle
         ));
-        assertThat(personService.getOldest()).isEqualTo(oldest);
+        assertThat(personService.getOldest()).isNotEmpty();
+        assertThat(personService.getOldest().get()).isEqualTo(oldest);
     }
 
     @Test
@@ -68,13 +69,14 @@ class PersonServiceImplTest {
                 twin2,
                 youngest
         ));
-        assertThat(personService.getOldest()).isEqualTo(twin1);
+        assertThat(personService.getOldest()).isNotEmpty();
+        assertThat(personService.getOldest().get()).isEqualTo(twin1);
     }
 
     @Test
     void testGetOldest_givenEmptyCollection() {
         when(personRepository.getAll()).thenReturn(List.of());
-        assertThat(personService.getOldest()).isEqualTo(null);
+        assertThat(personService.getOldest()).isEmpty();
     }
 
     @Test
