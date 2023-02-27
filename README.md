@@ -22,3 +22,9 @@ mvn clean install
 * The source data file has the form `firstname surname` there appears to be no requirement at this time to split these into separate values based on the questions we need to answer
 * `Gender` as an enum has been chosen due to the fixed range of gender values provided; Male and Female.
   * This can be expanded to provide more inclusive gender values
+* The `Person` objects are immutable to prevent against accidental mutation
+  * Hence the use of only `@Getter` for retrieving data and `@Builder` for construction
+  * Once constructed from our source they should not change
+  * This isn't to say a mapper could not create a new instance via a builder but it would have to be a conscious decision.
+* `@EqualsAndHashCode` has been added to ensure consistent behaviours with collections and comparisons.
+* `@ToString` has been added to assist with readability when debugging.
