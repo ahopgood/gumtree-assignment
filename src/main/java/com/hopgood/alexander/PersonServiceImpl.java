@@ -6,6 +6,7 @@ import lombok.Builder;
 @Builder
 public class PersonServiceImpl implements PersonService {
 
+    private final PersonRepository personRepository;
     @Override
     public Integer howManyMales() {
         return null;
