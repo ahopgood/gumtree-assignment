@@ -15,7 +15,12 @@ class GenderTest {
 
     @Test
     void testLowercaseGender_male() {
-        assertThat(Gender.valueOf("male")).isEqualTo(Gender.MALE);
+        assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("male"));
+    }
+
+    @Test
+    void testMixedcaseGender_male() {
+        assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("mAlE"));
     }
 
     @Test
@@ -24,22 +29,17 @@ class GenderTest {
     }
 
     @Test
-    void testMixedcaseGender_male() {
-        assertThat(Gender.valueOf("mAlE")).isEqualTo(Gender.MALE);
-    }
-
-    @Test
-    void testLowercaseGender_female() {
-        assertThat(Gender.valueOf("female")).isEqualTo(Gender.FEMALE);
-    }
-
-    @Test
     void testUppercaseGender_female() {
         assertThat(Gender.valueOf("FEMALE")).isEqualTo(Gender.FEMALE);
     }
 
     @Test
+    void testLowercaseGender_female() {
+        assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("female"));
+    }
+
+    @Test
     void testMixedcaseGender_female() {
-        assertThat(Gender.valueOf("fEmAlE")).isEqualTo(Gender.FEMALE);
+        assertThrows(IllegalArgumentException.class, () -> Gender.valueOf("fEmAlE"));
     }
 }
