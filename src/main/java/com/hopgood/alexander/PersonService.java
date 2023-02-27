@@ -9,5 +9,5 @@ public interface PersonService {
 
     Optional<Person> getOldest();
 
-    Integer howManyDaysOlder(Person first, Person second);
+    Long howManyDaysOlder(Person first, Person second);
 }

@@ -2,8 +2,11 @@ package com.hopgood.alexander;
 
 import com.hopgood.alexander.model.Gender;
 import com.hopgood.alexander.model.Person;
+import java.util.Comparator;
 import java.util.Optional;
 import lombok.Builder;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Builder
 public class PersonServiceImpl implements PersonService {
@@ -21,12 +24,15 @@ public class PersonServiceImpl implements PersonService {
     public Optional<Person> getOldest() {
         return personRepository.getAll()
                 .stream()
-                .sorted((person1, person2) -> person1.getDateOfBirth().compareTo(person2.getDateOfBirth()))
+                .sorted(Comparator.comparing(Person::getDateOfBirth))
                 .findFirst();
     }
 
     @Override
-    public Integer howManyDaysOlder(Person first, Person second) {
-        return null;
+    public Long howManyDaysOlder(Person first, Person second) {
+        if (first == null || second == null) {
+            return null;
+        }
+        return DAYS.between(first.getDateOfBirth(), second.getDateOfBirth());
     }
 }

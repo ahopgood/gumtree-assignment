@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -51,8 +50,8 @@ class PersonServiceImplTest {
         Person middle = Person.builder().dateOfBirth(LocalDate.of(2023, 2, 2)).build();
         Person youngest = Person.builder().dateOfBirth(LocalDate.of(2023, 3, 3)).build();
         when(personRepository.getAll()).thenReturn(List.of(
-                oldest,
                 youngest,
+                oldest,
                 middle
         ));
         assertThat(personService.getOldest()).isNotEmpty();
