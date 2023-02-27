@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PersonTest {
 
-    private ZonedDateTime dob = ZonedDateTime.of(1980, 7, 26, 0, 0, 0, 0, ZoneId.of("UTC"));
-    private String fullName = "Jacinda Ardern";
-    private Gender gender = Gender.FEMALE;
+    private final ZonedDateTime dob = ZonedDateTime.of(1980, 7, 26, 0, 0, 0, 0, ZoneId.of("UTC"));
+    private final String fullName = "Jacinda Ardern";
+    private final Gender gender = Gender.FEMALE;
 
     @Test
     void testGetDateOfBirth() {
