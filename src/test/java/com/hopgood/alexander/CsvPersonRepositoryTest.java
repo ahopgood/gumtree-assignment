@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeParseException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +37,16 @@ class CsvPersonRepositoryTest {
     }
 
     @Test
+    void testMap_withWrongDateFormat_fourDigitYear() {
+        String[] record = new String[]{"Bob Hope","Male"," 01/02/2023"};
+        assertThrows(DateTimeParseException.class, () -> csvPersonRepository.map(record));
+    }
+    @Test
+    void testMap_withWrongDateFormat_hyphensAsSeparators() {
+        String[] record = new String[]{"Bob Hope","Male"," 01-02-23"};
+        assertThrows(DateTimeParseException.class, () -> csvPersonRepository.map(record));
+    }
+    @Test
     void testMap_withLeadingWhitespace() {
         String[] record = new String[]{" Bob Hope"," Male"," 01/02/23"};
         Person person = csvPersonRepository.map(record);
@@ -48,7 +59,4 @@ class CsvPersonRepositoryTest {
         assertThat(person.getGender()).isEqualTo(Gender.MALE);
         assertThat(person.getFullName()).isEqualTo("Bob Hope");
     }
-
-
-
 }

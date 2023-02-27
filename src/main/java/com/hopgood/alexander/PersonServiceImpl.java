@@ -35,4 +35,11 @@ public class PersonServiceImpl implements PersonService {
         }
         return DAYS.between(first.getDateOfBirth(), second.getDateOfBirth());
     }
+
+    @Override
+    public Optional<Person> getByName(String partialName) {
+        return personRepository.getAll().stream()
+                .filter(person -> person.getFullName().contains(partialName))
+                .findFirst();
+    }
 }

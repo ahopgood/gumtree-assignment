@@ -10,4 +10,6 @@ public interface PersonService {
     Optional<Person> getOldest();
 
     Long howManyDaysOlder(Person first, Person second);
+
+    Optional<Person> getByName(String partialName);
 }

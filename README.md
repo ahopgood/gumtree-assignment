@@ -29,3 +29,7 @@ mvn clean install
   * This isn't to say a mapper could not create a new instance via a builder but it would have to be a conscious decision.
 * `@EqualsAndHashCode` has been added to ensure consistent behaviours with collections and comparisons.
 * `@ToString` has been added to assist with readability when debugging.
+
+### PersonService
+* `findFirst()` in oldest
+* `findFirst()` in `personService.getByName()` matches on a partial name so if there are two "Bill"s then we'll retrieve the first in the collection.
