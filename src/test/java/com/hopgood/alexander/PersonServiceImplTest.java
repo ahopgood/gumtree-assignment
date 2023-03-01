@@ -110,4 +110,75 @@ class PersonServiceImplTest {
         Person youngest = Person.builder().dateOfBirth(LocalDate.of(2023, 3, 3)).build();
         assertThat(personService.howManyDaysOlder(null, youngest)).isEqualTo(null);
     }
+
+    @Test
+    void testGetByName() {
+        Person bill = Person.builder().fullName("Bill McKnight").build();
+        Person phil = Person.builder().fullName("Phil Macleod").build();
+        Person jill = Person.builder().fullName("Jill Mackenzie").build();
+        when(personRepository.getAll()).thenReturn(List.of(
+                bill,
+                phil,
+                jill
+        ));
+        assertThat(personService.getByName("Bill McKnight")).isNotEmpty();
+        assertThat(personService.getByName("Bill McKnight").get()).isEqualTo(bill);
+    }
+
+    @Test
+    void testGetByName_partialMatch() {
+        Person bill = Person.builder().fullName("Bill McKnight").build();
+        Person phil = Person.builder().fullName("Phil Macleod").build();
+        Person jill = Person.builder().fullName("Jill Mackenzie").build();
+        when(personRepository.getAll()).thenReturn(List.of(
+                bill,
+                phil,
+                jill
+        ));
+        assertThat(personService.getByName("Bill")).isEmpty();
+    }
+
+    @Test
+    void testGetByName_noMatch() {
+        Person bill = Person.builder().fullName("Bill McKnight").build();
+        Person phil = Person.builder().fullName("Phil Macleod").build();
+        Person jill = Person.builder().fullName("Jill Mackenzie").build();
+        when(personRepository.getAll()).thenReturn(List.of(
+                bill,
+                phil,
+                jill
+        ));
+        personService.getByName("Sally Mally");
+    }
+
+    @Test
+    void testGetByName_twoMatchingNames_returnsFirstInList() {
+        Person bill = Person.builder().fullName("Bill McKnight")
+                .dateOfBirth(LocalDate.of(2023,1, 1)).build();
+        Person billJr = Person.builder().fullName("Bill McKnight")
+                .dateOfBirth(LocalDate.of(2022,1, 1)).build();
+        Person jill = Person.builder().fullName("Jill Mackenzie").build();
+        when(personRepository.getAll()).thenReturn(List.of(
+                bill,
+                billJr,
+                jill
+        ));
+        assertThat(personService.getByName("Bill McKnight")).isNotEmpty();
+        assertThat(personService.getByName("Bill McKnight").get()).isEqualTo(bill);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

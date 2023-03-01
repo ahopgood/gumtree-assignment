@@ -39,7 +39,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<Person> getByName(String partialName) {
         return personRepository.getAll().stream()
-                .filter(person -> person.getFullName().contains(partialName))
+                .filter(person -> person.getFullName().equals(partialName))
                 .findFirst();
     }
 }
