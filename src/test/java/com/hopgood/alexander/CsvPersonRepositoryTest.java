@@ -46,6 +46,29 @@ class CsvPersonRepositoryTest {
         String[] record = new String[]{"Bob Hope","Male"," 01-02-23"};
         assertThrows(DateTimeParseException.class, () -> csvPersonRepository.map(record));
     }
+
+    @Test
+    void testMap_withWrongDateFormat_yearFromPreviousCentury() {
+        String[] record = new String[]{" Bob Hope"," Male"," 01/02/40"};
+        Person person = csvPersonRepository.map(record);
+
+        LocalDate dob = person.getDateOfBirth();
+        assertThat(dob.getYear()).isEqualTo(1940);
+        assertThat(dob.getMonth()).isEqualTo(Month.FEBRUARY);
+        assertThat(dob.getDayOfMonth()).isEqualTo(1);
+    }
+
+    @Test
+    void testMap_withWrongDateFormat_yearFromCurrentCentury() {
+        String[] record = new String[]{" Bob Hope"," Male"," 01/02/39"};
+        Person person = csvPersonRepository.map(record);
+
+        LocalDate dob = person.getDateOfBirth();
+        assertThat(dob.getYear()).isEqualTo(2039);
+        assertThat(dob.getMonth()).isEqualTo(Month.FEBRUARY);
+        assertThat(dob.getDayOfMonth()).isEqualTo(1);
+    }
+
     @Test
     void testMap_withLeadingWhitespace() {
         String[] record = new String[]{" Bob Hope"," Male"," 01/02/23"};

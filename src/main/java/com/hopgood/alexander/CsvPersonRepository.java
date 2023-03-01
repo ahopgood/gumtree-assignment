@@ -10,10 +10,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.List;
 public class CsvPersonRepository implements PersonRepository {
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    private final DateTimeFormatter dateFormatter =
+            new DateTimeFormatterBuilder().appendPattern("dd/MM/")
+                    .appendValueReduced(ChronoField.YEAR, 2, 2, 1940)
+                    .toFormatter();
 
     private final List<Person> persons;
     public CsvPersonRepository(Path csvSourceFilePath) throws IOException, CsvException {
