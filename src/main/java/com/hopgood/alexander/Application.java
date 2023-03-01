@@ -20,13 +20,13 @@ public class Application {
     }
 
     public Person question2() {
-        return personService.getOldest().get();
+        return personService.getOldest().orElseThrow(() -> new RuntimeException("Could not find oldest person, is the collection empty or are people missing DOB information?"));
     }
 
     public Long question3() {
-        Optional<Person> bill = personService.getByName("Bill McKnight");
-        Optional<Person> paul = personService.getByName("Paul Robinson");
-        return personService.howManyDaysOlder(bill.get(), paul.get());
+        Person bill = personService.getByName("Bill McKnight").orElseThrow(() -> new RuntimeException("Bill McKnight doesn't exist"));
+        Person paul = personService.getByName("Paul Robinson").orElseThrow(() -> new RuntimeException("Paul Robinson doesn't exist"));
+        return personService.howManyDaysOlder(bill, paul);
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, CsvException {
